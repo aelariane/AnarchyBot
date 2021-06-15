@@ -1,0 +1,519 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AottgBotLib</name>
+    </assembly>
+    <members>
+        <member name="T:AottgBotLib.BotClient">
+            <summary>
+            Bot instance
+            </summary>
+        </member>
+        <member name="F:AottgBotLib.BotClient._cancellationSource">
+            <summary>
+            CancellationSource for Tokens.
+            </summary>
+        </member>
+        <member name="F:AottgBotLib.BotClient.APPLICATION_ID">
+            <summary>
+            Aottg Photon application id (Used for connection)
+            </summary>
+        </member>
+        <member name="F:AottgBotLib.BotClient.GAME_VERSION">
+            <summary>
+            Default game version
+            </summary>
+        </member>
+        <member name="F:AottgBotLib.BotClient.RC_VERSION">
+            <summary>
+            Custom RC servers version
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.BotClient.CancellationToken">
+            <summary>
+            CancellationToken to cancel all threads, Tasks, etc on Disconnect
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.BotClient.CommandHandler">
+            <summary>
+            Command handler of this Bot instance
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.BotClient.ConnectField">
+            <summary>
+            Change this to connect to custom RC servers
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.BotClient.IsUsingPhotonServer">
+            <summary>
+            If target connection placed on Photon Server, and not on cloud
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.BotClient.LogicType">
+            <summary>
+            Game logic type
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.BotClient.PhotonServerAddress">
+            <summary>
+            Gets or sets IP Address of Photon Server
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.BotClient.PlayerName">
+            <summary>
+            Name that will be showed in player list
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.BotClient.Properties">
+            <summary>
+            Bot Properties
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.BotClient.RoomList">
+            <summary>
+            Gets List of <seealso cref="T:Photon.Realtime.RoomInfo"/> on the region
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.BotClient.RPCHandler">
+            <summary>
+            Layer to simplify RPC processing
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.BotClient.Region">
+            <summary>
+            Region to connect (Europe is default)
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.BotClient.TransportProtocol">
+            <summary>
+            Connection Protocol (UDP by default)
+            </summary>
+        </member>
+        <member name="M:AottgBotLib.BotClient.#ctor(System.String)">
+            <summary>
+            Creates new instance of <seealso cref="T:AottgBotLib.BotClient"/>
+            </summary>
+            <param name="name">Name that will be displayed in player list</param>
+        </member>
+        <member name="M:AottgBotLib.BotClient.#ctor(System.String,ExitGames.Client.Photon.ConnectionProtocol)">
+            <summary>
+            Creates new instance of <seealso cref="T:AottgBotLib.BotClient"/>
+            </summary>
+            <param name="name">Name that will be displayed in player list</param>
+            <param name="connectionProtocol">Transport protocol that will be used</param>
+        </member>
+        <member name="M:AottgBotLib.BotClient.ConnectToMasterAsync">
+            <summary>
+            Connects to region
+            </summary>
+            <param name="region"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AottgBotLib.BotClient.CreateRoomAsync(AottgBotLib.RoomCreationInfo,System.Int32)">
+            <summary>
+            Creates room in region you connected to
+            </summary>
+            <param name="info"></param>
+            <param name="maxPlayers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AottgBotLib.BotClient.CreateRoomInRegionAsync(AottgBotLib.RoomCreationInfo,System.Int32)">
+            <summary>
+            Creates room in selected region
+            </summary>
+            <param name="roomInfo"></param>
+            <param name="maxPlayers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AottgBotLib.BotClient.JoinRandomRoomAsync">
+            <summary>
+            Joins random room
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AottgBotLib.BotClient.JoinRoomAsync(Photon.Realtime.RoomInfo)">
+            <summary>
+            Joins to selected room
+            </summary>
+            <param name="room"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AottgBotLib.BotClient.SendRPC(System.Int32,System.String,System.Object[],AottgBotLib.PhotonTargets)">
+            <summary>
+            Sends RPC to all other players
+            </summary>
+            <param name="viewId">Sender ViewId</param>
+            <param name="rpcName">Method name</param>
+            <param name="arguments">Method arguments</param>
+            <param name="targets"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AottgBotLib.BotClient.SendRPC(System.Int32,System.String,System.Object[],System.Int32)">
+            <summary>
+            Sends RPC to one player
+            </summary>
+            <param name="viewId">Sender ViewId</param>
+            <param name="rpcName">Method name</param>
+            <param name="arguments">Method arguments</param>
+            <param name="target">Target ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:AottgBotLib.BotClient.SendRPC(System.Int32,System.String,System.Object[],System.Int32[])">
+            <summary>
+            Sends RPC to selected players
+            </summary>
+            <param name="viewId">Sender ViewId</param>
+            <param name="rpcName">Method name</param>
+            <param name="arguments">Method arguments</param>
+            <param name="targets">Array of IDs that RPC will be sent to</param>
+            <returns></returns>
+        </member>
+        <member name="T:AottgBotLib.ClientExtensions">
+            <summary>
+            Set of extensions for <seealso cref="T:AottgBotLib.BotClient"/>
+            </summary>
+        </member>
+        <member name="M:AottgBotLib.ClientExtensions.SendChatMessage(AottgBotLib.BotClient,System.String,Photon.Realtime.Player)">
+            <summary>
+            Sends Chat message
+            </summary>
+            <param name="client">Instance that sends the message</param>
+            <param name="content">Content to send</param>
+            <param name="target">If null, sends to ll</param>
+            <returns>If sending was succeed</returns>
+        </member>
+        <member name="M:AottgBotLib.ClientExtensions.UseCommands(AottgBotLib.BotClient,System.Action{AottgBotLib.Commands.CommandHandlerConfiguration})">
+            <summary>
+            Initialized command handler for given Bot instance
+            </summary>
+            <param name="client">Bot instance</param>
+            <param name="config">Configuration of <seealso cref="T:AottgBotLib.Commands.CommandHandler"/></param>
+            <returns>Command handler of <paramref name="client"/></returns>
+            <exception cref="T:System.InvalidOperationException">Throws on attemption to use the method with BotClient that already has initialized <seealso cref="T:AottgBotLib.Commands.CommandHandler"/></exception>
+        </member>
+        <member name="T:AottgBotLib.Commands.CommandContext">
+            <summary>
+            Represents command execution context
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Commands.CommandContext.Arguments">
+            <summary>
+            Arguments coming after command
+            </summary>
+            <remarks>Basically <seealso cref="P:AottgBotLib.Commands.CommandContext.MessageContent"/> but split with space</remarks>
+        </member>
+        <member name="P:AottgBotLib.Commands.CommandContext.Client">
+            <summary>
+            Client invoked Command
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Commands.CommandContext.MessageContent">
+            <summary>
+            Content of message
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Commands.CommandContext.Sender">
+            <summary>
+            Player who invoked the command
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Commands.CommandHandler.Prefix">
+            <summary>
+            Prefix to indicate if Command was triggered
+            </summary>
+        </member>
+        <member name="M:AottgBotLib.Commands.CommandHandler.RegisterModule``1">
+            <summary>
+            Registers module as Command handle module
+            </summary>
+            <typeparam name="T">Module to add</typeparam>
+            <returns>CommandHandler to make chain calls</returns>
+        </member>
+        <member name="T:AottgBotLib.Commands.CommandHandlerConfiguration">
+            <summary>
+            Provides configuration for <seealso cref="T:AottgBotLib.Commands.CommandHandler"/>
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Commands.CommandHandlerConfiguration.Prefix">
+            <summary>
+            Sets <see cref="P:AottgBotLib.Commands.CommandHandler.Prefix"/>
+            </summary>
+        </member>
+        <member name="T:AottgBotLib.Commands.MasterClientCommandAttribute">
+            <summary>
+            Indicates that command is only accessible when <seealso cref="T:AottgBotLib.BotClient"/> is MasterClient
+            </summary>
+        </member>
+        <member name="T:AottgBotLib.Commands.Modules.RestartCommandModule">
+            <summary>
+            Provides restart command support
+            </summary>
+        </member>
+        <member name="M:AottgBotLib.Commands.Modules.RestartCommandModule.RestartCommand(AottgBotLib.Commands.CommandContext)">
+            <summary>
+            Handles restart request
+            </summary>
+            <param name="context">Command execution context</param>
+        </member>
+        <member name="T:AottgBotLib.Commands.PrefixAttribute">
+            <summary>
+            Use this to create custom prefix for command instead of default one
+            </summary>
+        </member>
+        <member name="T:AottgBotLib.CustomRoomProperty">
+            <summary>
+            Set of used custom properties for room
+            </summary>
+        </member>
+        <member name="T:AottgBotLib.Handlers.RPCHandler">
+            <summary>
+            Handles event 200 that stands for RPC (Remote method call)
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Handlers.RPCHandler.Shortcuts">
+            <summary>
+            All written shortcuts
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Handlers.RPCHandler.DefaultShortcuts">
+            <summary>
+            Contains all shortcuts that initialized by default, so you should not add them manually. They always writes to <seealso cref="P:AottgBotLib.Handlers.RPCHandler.Shortcuts"/>
+            </summary>
+        </member>
+        <member name="M:AottgBotLib.Handlers.RPCHandler.AddCallback(System.String,System.Action{AottgBotLib.Handlers.RPCArguments})">
+            <summary>
+            Executes <paramref name="callback"/> when RPC with name <paramref name="rpcName"/> received
+            </summary>
+            <param name="rpcName">Method name</param>
+            <param name="callback">Method that will be executed</param>
+        </member>
+        <member name="M:AottgBotLib.Handlers.RPCHandler.AddShortcut(System.Byte,System.String)">
+            <summary>
+            Adds byte to string shortcut
+            </summary>
+            <param name="b">Byte key</param>
+            <param name="fullName">Full RPC name</param>
+        </member>
+        <member name="M:AottgBotLib.Handlers.RPCHandler.InitializeShortcuts(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.Byte,System.String}})">
+            <summary>
+            Initializes <seealso cref="P:AottgBotLib.Handlers.RPCHandler.Shortcuts"/> collection from given collection
+            </summary>
+            <param name="shortcuts">Collecton of byte to string shortcuts</param>
+        </member>
+        <member name="M:AottgBotLib.Handlers.RPCHandlerExtensions.AddChatCallback(AottgBotLib.Handlers.RPCHandler,AottgBotLib.Handlers.RPCHandlerExtensions.ChatCallback)">
+            <summary>
+            Adds callback for Chat method
+            </summary>
+            <param name="handler">Handler to attach callback</param>
+            <param name="callback">Callback</param>
+            <returns>Handler to continue chatin calls</returns>
+        </member>
+        <member name="T:AottgBotLib.Handlers.SupportedRPC">
+            <summary>
+            Supported RPCs to add callbacks and it will work "from the box"
+            </summary>
+            <remarks>You do not have to add shortcuts for these, as they already built in</remarks>
+        </member>
+        <member name="P:AottgBotLib.HostBotClient.GreetingMessage">
+            <summary>
+            This message will be sent to a just joined player
+            </summary>
+        </member>
+        <member name="T:AottgBotLib.Internal.HostInRoomCallbacks">
+            <summary>
+            Room callbacks specifically for <seealso cref="T:AottgBotLib.HostBotClient"/>
+            </summary>
+        </member>
+        <member name="T:AottgBotLib.Logic.BaseLogic">
+            <summary>
+            Base set of game logic
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Logic.BaseLogic.Client">
+            <summary>
+            Instance of <seealso cref="T:AottgBotLib.BotClient"/> who owns this logic
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Logic.BaseLogic.BaseServerTime">
+            <summary>
+            Base time of server.
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Logic.BaseLogic.HumanScore">
+            <summary>
+            Score of human side
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Logic.BaseLogic.RestartCancellationSource">
+            <summary>
+            Cancellation source for <seealso cref="T:System.Threading.CancellationToken"/>. Can be used to cancel tasks on restart
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Logic.BaseLogic.RestartTimer">
+            <summary>
+            Timer to restart game after win or lose
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Logic.BaseLogic.Round">
+            <summary>
+            Instance of <seealso cref="T:AottgBotLib.Logic.Round"/> that represents round state
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Logic.BaseLogic.RoundsCount">
+            <summary>
+            How many rounds were played
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Logic.BaseLogic.ServerTime">
+            <summary>
+            Remaining alive time of server
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.Logic.BaseLogic.TitanScore">
+            <summary>
+            Score ot titan side
+            </summary>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.#ctor(AottgBotLib.BotClient)">
+            <summary>
+            Constructir that should be implemented in child classes
+            </summary>
+            <param name="client"></param>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.Restart">
+            <summary>
+            Restarts game
+            </summary>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.Notify(System.String,System.Boolean)">
+            <summary>
+            Sends message to all players
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.OnGameLose">
+            <summary>
+            Calls on <seealso cref="M:AottgBotLib.Logic.BaseLogic.GameLose"/>
+            </summary>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.OnGameLoseRpc(System.Int32)">
+            <summary>
+            Calls when "netGameLose" RPC received
+            </summary>
+            <param name="score"></param>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.OnGameWin">
+            <summary>
+            Calls on <seealso cref="M:AottgBotLib.Logic.BaseLogic.GameWin"/>
+            </summary>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.OnGameWinRpc(System.Int32)">
+            <summary>
+            Calls when "netGameWin" RPC received
+            </summary>
+            <param name="score"></param>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.OnRefreshStatus(System.Int32,System.Int32,System.Int32,System.Int32,System.Single,System.Single,System.Boolean,System.Boolean)">
+            <summary>
+            Calls when refreshStatus RPC received
+            </summary>
+            <param name="hScore">Human side score</param>
+            <param name="tScore">Titan side score</param>
+            <param name="wave">Current wave</param>
+            <param name="highestWave">Highest acheived wave</param>
+            <param name="roundTime">Current round time</param>
+            <param name="serverTime">Remained server time</param>
+            <param name="startRace">If race was started (UNUSED)</param>
+            <param name="endRace">If race was finished (UNUSED)</param>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.OnRequireStatus">
+            <summary>
+            Sends refreshStatus RPC
+            </summary>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.OnSomeOneIsDead(System.Int32)">
+            <summary>
+            Calls when player dies
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.OnTitanDown(System.String,System.Boolean)">
+            <summary>
+            Calls when titan dies
+            </summary>
+            <param name="name"></param>
+            <param name="isLeaving"></param>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.GameLose">
+            <summary>
+            Ends round with titan victory
+            </summary>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.GameWin">
+            <summary>
+            Ends round with humanity victory
+            </summary>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.OnRestart">
+            <summary>
+            Calls on Restart
+            </summary>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.OnUpdate(System.Single)">
+            <summary>
+            Calls on Update
+            </summary>
+            <param name="deltaTime">Time between last and current OnUpdate calls</param>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.RestartGame">
+            <summary>
+            Restarts game. Appliable only if player is MasterClient
+            </summary>
+        </member>
+        <member name="M:AottgBotLib.Logic.BaseLogic.RestartOnTimer">
+            <summary>
+            Restarts game after <seealso cref="P:AottgBotLib.Logic.BaseLogic.RestartTimer"/> seconds
+            </summary>
+        </member>
+        <member name="T:AottgBotLib.Logic.RacingLogic">
+            <summary>
+            Logic for Akina racing map
+            </summary>
+        </member>
+        <member name="T:AottgBotLib.PhotonRegion">
+            <summary>
+            set of availible regions in Aottg
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.RoomCreationInfo.ID">
+            <summary>
+            ID of the Room (Generates automatically, but if you want to specify it, you can)
+            </summary>
+        </member>
+        <member name="P:AottgBotLib.RoomCreationInfo.Password">
+            <summary>
+            Sets pasword of room (NOT IMPLEMENTED YET)
+            </summary>
+        </member>
+        <member name="M:AottgBotLib.RoomCreationInfo.GetMapName">
+            <summary>
+            Returns map name of Room
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.NotSupportedException"></exception>
+        </member>
+        <member name="M:AottgBotLib.RoomCreationInfo.ToServerString">
+            <summary>
+            Converts to aottg RoomInfo Nam, that can be read by AoTTG serverlist
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AottgBotLib.StringExtensions.RemoveAll(System.String)">
+            <summary>
+            Removes all tags, etc from string
+            </summary>
+            <param name="x"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
