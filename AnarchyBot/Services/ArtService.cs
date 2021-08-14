@@ -148,7 +148,7 @@ namespace AnarchyBot.Services
                 hasTags = realTags.Count() > 0;
                 foreach (Tag realTag in realTags)
                 {
-                    query.Where(x => x.Tags.Any(x => x.TagId == realTag.Id));
+                    query = query.Where(x => x.Tags.Any(x => x.TagId == realTag.Id));
                 }
             }
 
