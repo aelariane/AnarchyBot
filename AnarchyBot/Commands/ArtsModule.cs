@@ -28,6 +28,14 @@ namespace AnarchyBot.Commands
         private OptionIdentifier _titleOption = new OptionIdentifier('t', "title");
         private OptionIdentifier _uploadOption = new OptionIdentifier('u', "upload");
 
+        private bool CanPostArts(DiscordMember member)
+        {
+            bool isAdmin = member.Roles.Any(x => (x.Permissions & Permissions.Administrator) == Permissions.Administrator);
+            bool hasArterRole = member.Roles.Any(x => x.Name == "Arter");
+
+            return isAdmin || hasArterRole;
+        }
+
         private async Task<string> UploadAsync(DiscordGuild guild, string url, IArguments args, bool uploadToDatabase)
         {
             if(Uri.TryCreate(url, UriKind.Absolute, out Uri uri) == false)
@@ -234,7 +242,7 @@ namespace AnarchyBot.Commands
                 args.GetOption(_sourceOption).Values[0]
                 : ctx.Message.Attachments.First().ProxyUrl;
 
-            bool upload = args.HasOption(_uploadOption) && ctx.Member.Roles.Any(x => (x.Permissions & Permissions.Administrator) == Permissions.Administrator);
+            bool upload = args.HasOption(_uploadOption) && CanPostArts(ctx.Member);
             string newUrl = await UploadAsync(ctx.Guild, source, args, upload);
 
             if(newUrl == null)
@@ -270,20 +278,27 @@ namespace AnarchyBot.Commands
                 await ctx.Channel.SendMessageAsync("Mention a channel");
                 return;
             }
-
-            using var context = new AnarchyBotContext();
-            ArtServiceInformation info = await context.ServiceInformations.FirstOrDefaultAsync(x => x.GuildId == ctx.Guild.Id);
-            if(info == null)
+            try
             {
-                info = new ArtServiceInformation() { GuildId = ctx.Guild.Id, ChannelId = channel.Id };
-                context.ServiceInformations.Add(info);
-                await context.SaveChangesAsync();
+                using var context = new AnarchyBotContext();
+                ArtServiceInformation info = await context.ServiceInformations.FirstOrDefaultAsync(x => x.GuildId == ctx.Guild.Id);
+                if (info == null)
+                {
+                    info = new ArtServiceInformation() { GuildId = ctx.Guild.Id, ChannelId = channel.Id };
+                    context.ServiceInformations.Add(info);
+                    await context.SaveChangesAsync();
+                }
+                else
+                {
+                    info.ChannelId = ctx.Channel.Id;
+                    info = context.Entry(info).Entity;
+                    await context.SaveChangesAsync();
+                }
+                await ctx.Channel.SendMessageAsync("Channel added successfully");
             }
-            else
+            catch (Exception ex)
             {
-                info.ChannelId = ctx.Channel.Id;
-                info = context.Entry(info).Entity;
-                await context.SaveChangesAsync();
+                Console.WriteLine(ex.Message + "\n" + ex.StackTrace);
             }
             
         }
@@ -292,7 +307,7 @@ namespace AnarchyBot.Commands
         [Description("Uploads artwork")]
         public async Task UploadArtAsync(CommandContext ctx, params string[] myContent)
         {
-            if (ctx.Member.Roles.Any(x => (x.Permissions & Permissions.Administrator) == Permissions.Administrator) == false)
+            if (CanPostArts(ctx.Member) == false)
             {
                 await ctx.Channel.SendMessageAsync("Only owner can upload arts");
                 return;
