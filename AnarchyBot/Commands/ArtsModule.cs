@@ -58,7 +58,11 @@ namespace AnarchyBot.Commands
 
             HttpClient httpClient = new HttpClient();
             Stream fileStream = await httpClient.GetStreamAsync(url);
-            DiscordMessage newMessage = await channel.SendFileAsync(url.Split('/').Last(), fileStream);
+
+            var builder = new DiscordMessageBuilder();
+            builder.WithFile(url.Split('/').Last(), fileStream);
+
+            DiscordMessage newMessage = await channel.SendMessageAsync(builder);
 
             string source = newMessage.Attachments.FirstOrDefault().ProxyUrl;
 
